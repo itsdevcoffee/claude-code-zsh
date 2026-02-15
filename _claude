@@ -308,6 +308,27 @@ _claude_mcp() {
   esac
 }
 
+_claude_plugin_scopes() {
+  local -a scopes
+  scopes=(
+    'user:User-level scope (marketplace plugins default)'
+    'project:Project-level scope'
+    'local:Local directory scope'
+  )
+  _describe 'scope' scopes
+}
+
+_claude_plugin_update_scopes() {
+  local -a scopes
+  scopes=(
+    'user:User-level scope (marketplace plugins default)'
+    'project:Project-level scope'
+    'local:Local directory scope'
+    'managed:Managed plugins scope'
+  )
+  _describe 'scope' scopes
+}
+
 _claude_plugin() {
   local -a plugin_commands
   plugin_commands=(
@@ -339,32 +360,32 @@ _claude_plugin() {
         install|i)
           _arguments \
             '(-h --help)'{-h,--help}'[Display help]' \
-            '(-s --scope)'{-s,--scope}'[Installation scope]:scope:(user project local)' \
+            '(-s --scope)'{-s,--scope}'[Installation scope (omit to auto-detect)]:scope:_claude_plugin_scopes' \
             '1:plugin:'
           ;;
         enable)
           _arguments \
             '(-h --help)'{-h,--help}'[Display help]' \
-            '(-s --scope)'{-s,--scope}'[Installation scope]:scope:(user project local)' \
+            '(-s --scope)'{-s,--scope}'[Plugin scope (omit to auto-detect)]:scope:_claude_plugin_scopes' \
             '1:plugin:_claude_installed_plugins'
           ;;
         disable)
           _arguments \
             '(-a --all)'{-a,--all}'[Disable all enabled plugins]' \
             '(-h --help)'{-h,--help}'[Display help]' \
-            '(-s --scope)'{-s,--scope}'[Installation scope]:scope:(user project local)' \
+            '(-s --scope)'{-s,--scope}'[Plugin scope (omit to auto-detect)]:scope:_claude_plugin_scopes' \
             '1:plugin:_claude_installed_plugins'
           ;;
         uninstall|remove)
           _arguments \
             '(-h --help)'{-h,--help}'[Display help]' \
-            '(-s --scope)'{-s,--scope}'[Uninstall from scope]:scope:(user project local)' \
+            '(-s --scope)'{-s,--scope}'[Uninstall from scope (omit to auto-detect)]:scope:_claude_plugin_scopes' \
             '1:plugin:_claude_installed_plugins'
           ;;
         update)
           _arguments \
             '(-h --help)'{-h,--help}'[Display help]' \
-            '(-s --scope)'{-s,--scope}'[Installation scope]:scope:(user project local managed)' \
+            '(-s --scope)'{-s,--scope}'[Installation scope (omit to auto-detect)]:scope:_claude_plugin_update_scopes' \
             '1:plugin:_claude_installed_plugins'
           ;;
         list)
