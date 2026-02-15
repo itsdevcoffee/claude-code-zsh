@@ -44,7 +44,7 @@ install_oh_my_zsh() {
   echo -e "${GREEN}✓ Installed completion file${NC}"
   echo -e "\nAdd ${YELLOW}claude-code-zsh${NC} to your plugins in ~/.zshrc:"
   echo -e "  plugins=(... ${YELLOW}claude-code-zsh${NC})"
-  echo -e "\nThen run: ${YELLOW}source ~/.zshrc${NC}"
+  echo -e "\nThen run: ${YELLOW}exec zsh${NC}"
 }
 
 # Function to install manually
@@ -63,7 +63,7 @@ install_manual() {
   echo -e "\nAdd the following to your ~/.zshrc:"
   echo -e "  ${YELLOW}fpath=($COMP_DIR \$fpath)${NC}"
   echo -e "  ${YELLOW}autoload -Uz compinit && compinit${NC}"
-  echo -e "\nThen run: ${YELLOW}source ~/.zshrc${NC}"
+  echo -e "\nThen run: ${YELLOW}exec zsh${NC}"
 }
 
 # Function to show Antigen instructions
@@ -71,7 +71,7 @@ show_antigen() {
   echo -e "${BLUE}Antigen Installation${NC}"
   echo -e "\nAdd the following to your ~/.zshrc:"
   echo -e "  ${YELLOW}antigen bundle $SCRIPT_DIR${NC}"
-  echo -e "\nThen run: ${YELLOW}source ~/.zshrc${NC}"
+  echo -e "\nThen run: ${YELLOW}exec zsh${NC}"
 }
 
 # Function to show Zinit instructions
@@ -81,7 +81,7 @@ show_zinit() {
   echo -e "  ${YELLOW}zinit load $SCRIPT_DIR${NC}"
   echo -e "\nOr for lazy loading:"
   echo -e "  ${YELLOW}zinit wait lucid for $SCRIPT_DIR${NC}"
-  echo -e "\nThen run: ${YELLOW}source ~/.zshrc${NC}"
+  echo -e "\nThen run: ${YELLOW}exec zsh${NC}"
 }
 
 # Function to show direct source instructions
@@ -90,7 +90,7 @@ show_direct() {
   echo -e "\nAdd the following to your ~/.zshrc:"
   echo -e "  ${YELLOW}fpath=($SCRIPT_DIR \$fpath)${NC}"
   echo -e "  ${YELLOW}autoload -Uz compinit && compinit${NC}"
-  echo -e "\nThen run: ${YELLOW}source ~/.zshrc${NC}"
+  echo -e "\nThen run: ${YELLOW}exec zsh${NC}"
 }
 
 # Main installation menu

@@ -1,21 +1,33 @@
 # Claude Code ZSH Completions
 
-Comprehensive ZSH completions for the [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code).
+_Tab-complete every Claude Code command, subcommand, flag, and value — right from your terminal._
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Zsh: 5.0+](https://img.shields.io/badge/Zsh-5.0%2B-blue.svg)](https://www.zsh.org/)
+[![GitHub stars](https://img.shields.io/github/stars/itsdevcoffee/claude-code-zsh)](https://github.com/itsdevcoffee/claude-code-zsh/stargazers)
+[![GitHub last commit](https://img.shields.io/github/last-commit/itsdevcoffee/claude-code-zsh)](https://github.com/itsdevcoffee/claude-code-zsh/commits/main)
+
+<!-- TODO: Add a demo GIF here recorded with vhs or asciinema -->
 
 ## Features
 
-- Complete coverage of all commands, subcommands, and their options
-- Nested subcommand support up to 3 levels deep (`claude plugin marketplace add`)
-- Context-aware value suggestions (scopes, transport types, models, formats)
-- Easy installation with multiple methods
-- Simple updates via `git pull`
+- **Full command coverage** — 40+ flags, all subcommands up to 3 levels deep
+- **Context-aware values** — models, permission modes, output formats, scopes, transport types
+- **Works everywhere** — Oh My Zsh, Zinit, Antigen, zplug, or plain fpath
+- **Zero dependencies** — pure ZSH completion, no external tools required
+- **Easy updates** — just `git pull`
+
+## Requirements
+
+- Zsh 5.0+
+- [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) installed
 
 ## Installation
 
 ### Quick Install (Interactive)
 
 ```bash
-git clone https://github.com/dev-coffee/claude-code-zsh.git
+git clone https://github.com/itsdevcoffee/claude-code-zsh.git
 cd claude-code-zsh
 ./install.sh
 ```
@@ -23,40 +35,60 @@ cd claude-code-zsh
 ### Oh My Zsh
 
 ```bash
-git clone https://github.com/dev-coffee/claude-code-zsh.git \
+git clone https://github.com/itsdevcoffee/claude-code-zsh.git \
   ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/claude-code-zsh
 
 # Add to plugins in ~/.zshrc
 plugins=(... claude-code-zsh)
 
-source ~/.zshrc
+# Reload shell
+exec zsh
 ```
 
 ### Manual (fpath)
 
 ```bash
-git clone https://github.com/dev-coffee/claude-code-zsh.git ~/.zsh/claude-code-zsh
+git clone https://github.com/itsdevcoffee/claude-code-zsh.git ~/.zsh/claude-code-zsh
 
 # Add to ~/.zshrc
 fpath=(~/.zsh/claude-code-zsh $fpath)
 autoload -Uz compinit && compinit
 
-source ~/.zshrc
+# Reload shell
+exec zsh
 ```
 
 ### Antigen
 
 ```bash
-antigen bundle dev-coffee/claude-code-zsh
+antigen bundle itsdevcoffee/claude-code-zsh
 ```
 
 ### Zinit
 
 ```bash
-zinit light dev-coffee/claude-code-zsh
+zinit light itsdevcoffee/claude-code-zsh
 
 # Or with lazy loading
-zinit wait lucid for dev-coffee/claude-code-zsh
+zinit wait lucid for itsdevcoffee/claude-code-zsh
+```
+
+### zplug
+
+```bash
+zplug "itsdevcoffee/claude-code-zsh"
+```
+
+## Usage
+
+After installation, type `claude` and press `Tab` to see available subcommands. Completions work at every level:
+
+```
+claude <Tab>              # top-level commands and flags
+claude mcp <Tab>          # mcp subcommands
+claude mcp add -<Tab>     # flags for mcp add (--scope, --transport, etc.)
+claude --model <Tab>      # value suggestions (sonnet, opus, haiku)
+claude --effort <Tab>     # value suggestions (low, medium, high)
 ```
 
 ## Updating
@@ -69,12 +101,12 @@ git pull
 rm -f ~/.zcompdump* && exec zsh
 ```
 
-## What's Completed
+## Supported Commands
 
 ### Commands & Subcommands
 
-| Command | Subcommands | Options |
-|---------|-------------|---------|
+| Command | Subcommands | Per-Subcommand Options |
+|---------|-------------|------------------------|
 | `claude` | - | 40+ flags with value suggestions |
 | `claude auth` | `login`, `logout`, `status` | `--email`, `--sso`, `--json`, `--text` |
 | `claude doctor` | - | `--help` |
@@ -116,10 +148,18 @@ which _claude
 
 ### Still not working
 
-Make sure ZSH completion system is enabled in `~/.zshrc`:
+Make sure the ZSH completion system is enabled in `~/.zshrc`:
 
 ```bash
 autoload -Uz compinit && compinit
+```
+
+## Uninstallation
+
+Remove the cloned directory and the plugin reference from `~/.zshrc`, then reload:
+
+```bash
+exec zsh
 ```
 
 ## Contributing
@@ -133,4 +173,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## License
 
-MIT
+[MIT](LICENSE)

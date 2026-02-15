@@ -1,7 +1,7 @@
 #compdef claude
 
 # ZSH completion for Claude Code CLI
-# https://github.com/dev-coffee/claude-code-zsh
+# https://github.com/itsdevcoffee/claude-code-zsh
 
 _claude() {
   local context state state_descr line
