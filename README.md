@@ -24,39 +24,51 @@ _Tab-complete every Claude Code command, subcommand, flag, and value — right f
 
 ## Installation
 
-### Quick Install (Interactive)
+### Quick Install
 
 ```bash
-git clone https://github.com/itsdevcoffee/claude-code-zsh.git
-cd claude-code-zsh
-./install.sh
+git clone --depth 1 https://github.com/itsdevcoffee/claude-code-zsh.git ~/.zsh/claude-code-zsh
 ```
+
+Add to your `~/.zshrc`:
+
+```zsh
+fpath=(~/.zsh/claude-code-zsh $fpath)
+```
+
+Then reload: `exec zsh`
+
+> If you don't already have `autoload -Uz compinit && compinit` in your `.zshrc`, add it after the `fpath` line.
 
 ### Oh My Zsh
 
 ```bash
-git clone https://github.com/itsdevcoffee/claude-code-zsh.git \
+git clone --depth 1 https://github.com/itsdevcoffee/claude-code-zsh.git \
   ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/claude-code-zsh
-
-# Add to plugins in ~/.zshrc
-plugins=(... claude-code-zsh)
-
-# Reload shell
-exec zsh
 ```
+
+Add `claude-code-zsh` to your plugins in `~/.zshrc`:
+
+```zsh
+plugins=(... claude-code-zsh)
+```
+
+Then reload: `exec zsh`
 
 ### Manual (fpath)
 
 ```bash
-git clone https://github.com/itsdevcoffee/claude-code-zsh.git ~/.zsh/claude-code-zsh
+git clone --depth 1 https://github.com/itsdevcoffee/claude-code-zsh.git ~/.zsh/claude-code-zsh
+```
 
-# Add to ~/.zshrc
+Add to your `~/.zshrc`:
+
+```zsh
 fpath=(~/.zsh/claude-code-zsh $fpath)
 autoload -Uz compinit && compinit
-
-# Reload shell
-exec zsh
 ```
+
+Then reload: `exec zsh`
 
 ### Antigen
 
@@ -94,8 +106,7 @@ claude --effort <Tab>     # value suggestions (low, medium, high)
 ## Updating
 
 ```bash
-cd /path/to/claude-code-zsh
-git pull
+git -C ~/.zsh/claude-code-zsh pull
 
 # Clear completion cache and reload
 rm -f ~/.zcompdump* && exec zsh
