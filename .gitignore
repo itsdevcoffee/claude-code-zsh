@@ -13,5 +13,9 @@
 .DS_Store
 Thumbs.db
 
+# Claude
+.claude/
+.agents/
+
 # Temporary
 docs/tmp/
