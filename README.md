@@ -7,7 +7,11 @@ _Tab-complete every Claude Code command, subcommand, flag, and value — right f
 [![GitHub stars](https://img.shields.io/github/stars/itsdevcoffee/claude-code-zsh)](https://github.com/itsdevcoffee/claude-code-zsh/stargazers)
 [![GitHub last commit](https://img.shields.io/github/last-commit/itsdevcoffee/claude-code-zsh)](https://github.com/itsdevcoffee/claude-code-zsh/commits/main)
 
-<!-- TODO: Add a demo GIF here recorded with vhs or asciinema -->
+![Demo](demo.gif)
+
+## Why?
+
+The Claude Code CLI has 40+ flags and deep subcommand hierarchies (`claude plugin marketplace add`, `claude mcp add --scope --transport`). Remembering every flag and value is tedious. This plugin gives you instant tab completion for every command, option, and value — making the CLI feel native to your shell.
 
 ## Features
 
@@ -22,23 +26,17 @@ _Tab-complete every Claude Code command, subcommand, flag, and value — right f
 - Zsh 5.0+
 - [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) installed
 
-## Installation
-
-### Quick Install
+## Quick Start
 
 ```bash
 git clone --depth 1 https://github.com/itsdevcoffee/claude-code-zsh.git ~/.zsh/claude-code-zsh
+echo 'fpath=(~/.zsh/claude-code-zsh $fpath)' >> ~/.zshrc
+exec zsh
 ```
 
-Add to your `~/.zshrc`:
+Type `claude <Tab>` to verify it's working.
 
-```zsh
-fpath=(~/.zsh/claude-code-zsh $fpath)
-```
-
-Then reload: `exec zsh`
-
-> If you don't already have `autoload -Uz compinit && compinit` in your `.zshrc`, add it after the `fpath` line.
+## Installation
 
 ### Oh My Zsh
 
@@ -47,15 +45,15 @@ git clone --depth 1 https://github.com/itsdevcoffee/claude-code-zsh.git \
   ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/claude-code-zsh
 ```
 
-Add `claude-code-zsh` to your plugins in `~/.zshrc`:
+Add `claude-code-zsh` to your plugins array in `~/.zshrc`:
 
 ```zsh
 plugins=(... claude-code-zsh)
 ```
 
-Then reload: `exec zsh`
+Reload: `exec zsh`
 
-### Manual (fpath)
+### Manual / Plain ZSH (fpath)
 
 ```bash
 git clone --depth 1 https://github.com/itsdevcoffee/claude-code-zsh.git ~/.zsh/claude-code-zsh
@@ -65,10 +63,11 @@ Add to your `~/.zshrc`:
 
 ```zsh
 fpath=(~/.zsh/claude-code-zsh $fpath)
-autoload -Uz compinit && compinit
 ```
 
-Then reload: `exec zsh`
+> If you don't already have `autoload -Uz compinit && compinit` in your `.zshrc`, add it after the `fpath` line.
+
+Reload: `exec zsh`
 
 ### Antigen
 
@@ -106,7 +105,9 @@ claude --effort <Tab>     # value suggestions (low, medium, high)
 ## Updating
 
 ```bash
-git -C ~/.zsh/claude-code-zsh pull
+# Navigate to install directory and pull
+cd ~/.zsh/claude-code-zsh  # or ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/claude-code-zsh for Oh My Zsh
+git pull
 
 # Clear completion cache and reload
 rm -f ~/.zcompdump* && exec zsh
@@ -167,20 +168,51 @@ autoload -Uz compinit && compinit
 
 ## Uninstallation
 
-Remove the cloned directory and the plugin reference from `~/.zshrc`, then reload:
+**For Oh My Zsh:**
 
 ```bash
+# Remove from plugins array in ~/.zshrc:
+# plugins=(... claude-code-zsh)  # <- Delete this entry
+
+# Remove directory
+rm -rf ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/claude-code-zsh
+
 exec zsh
 ```
 
+**For manual install:**
+
+```bash
+# Remove this line from ~/.zshrc:
+# fpath=(~/.zsh/claude-code-zsh $fpath)
+
+# Remove directory
+rm -rf ~/.zsh/claude-code-zsh
+
+exec zsh
+```
+
+## FAQ
+
+**Q: Do I need to update this when Claude Code updates?**
+A: Yes, if new commands/flags are added. Just run `git pull` in the install directory and reload your shell.
+
+**Q: Does this slow down my shell startup?**
+A: No, ZSH loads completions lazily (only when you press Tab).
+
+**Q: Can I customize which completions appear?**
+A: ZSH completion system is highly customizable. See [ZSH completion documentation](https://zsh.sourceforge.io/Doc/Release/Completion-System.html) for advanced configuration.
+
 ## Contributing
+
+Contributions welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for development guidelines and testing instructions.
+
+Quick contribution workflow:
 
 1. Fork the repository
 2. Edit `_claude` with your changes
-3. Test locally (`rm -f ~/.zcompdump* && exec zsh`)
+3. Test locally: `rm -f ~/.zcompdump* && exec zsh`
 4. Submit a pull request
-
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
 ## License
 
