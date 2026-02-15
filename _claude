@@ -31,6 +31,27 @@ _claude_installed_plugins() {
   _describe 'plugin' plugins
 }
 
+_claude_marketplace_plugins() {
+  local -a plugins
+  local update_policy
+
+  zstyle -s ":completion:*:*:claude:*" cache-policy update_policy
+  if [[ -z "$update_policy" ]]; then
+    zstyle ":completion:*:*:claude:*" cache-policy _claude_cache_policy
+  fi
+
+  if _cache_invalid _claude_marketplace_plugins || ! _retrieve_cache _claude_marketplace_plugins; then
+    local _claude_bin="${commands[claude]:-${${:-claude}:c}}"
+    local _jq_bin="${commands[jq]:-${${:-jq}:c}}"
+    if [[ -n "$_claude_bin" ]] && [[ -n "$_jq_bin" ]]; then
+      plugins=(${(f)"$(NO_COLOR=1 "$_claude_bin" plugin list --available --json 2>/dev/null | "$_jq_bin" -r '.available[] | .pluginId + ":" + (.description | gsub(":"; "\\:") | .[0:80])' 2>/dev/null)"})
+    fi
+    _store_cache _claude_marketplace_plugins plugins
+  fi
+
+  _describe 'plugin' plugins
+}
+
 _claude_mcp_servers() {
   local -a servers
   local update_policy
@@ -361,7 +382,7 @@ _claude_plugin() {
           _arguments \
             '(-h --help)'{-h,--help}'[Display help]' \
             '(-s --scope)'{-s,--scope}'[Installation scope (omit to auto-detect)]:scope:_claude_plugin_scopes' \
-            '1:plugin:'
+            '1:plugin:_claude_marketplace_plugins'
           ;;
         enable)
           _arguments \
